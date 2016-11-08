@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+
+    <group android:checkableBehavior="single"
+        >
+        <item
+            android:id="@+id/now_manage"
+            android:icon="@mipmap/now_list"
+            android:title="即时订单" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@mipmap/app_list"
+            android:title="约车订单" />
+        <item
+            android:id="@+id/robbed_manage"
+            android:icon="@mipmap/robb_order"
+            android:title="已抢约车订单" />
+        <!--<item-->
+            <!--android:id="@+id/nav_share"-->
+            <!--android:icon="@drawable/ic_menu_share"-->
+            <!--android:title="分享" />-->
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="更新" />
+
+    </group>
+
+</menu>

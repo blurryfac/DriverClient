@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DriverClient.iml" filepath="$PROJECT_DIR$/DriverClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/easyrecyclerview/easyrecyclerview.iml" filepath="$PROJECT_DIR$/easyrecyclerview/easyrecyclerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sMSSDK/sMSSDK.iml" filepath="$PROJECT_DIR$/sMSSDK/sMSSDK.iml" />
+    </modules>
+  </component>
+</project>

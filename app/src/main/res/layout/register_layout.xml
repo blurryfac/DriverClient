@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5E5E5"
+
+    android:orientation="vertical">
+
+
+        <include layout="@layout/app_bar_main"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="2"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="手机号："-->
+                <!--android:textSize="18sp"-->
+                <!--android:id="@+id/textView2" />-->
+
+            <com.zy.driverclient.view.AutoClearEditText
+                android:id="@+id/et_phone1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@null"
+                android:hint="手机号："
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_gain_smscode1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="#ffffff"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+            <com.zy.driverclient.view.AutoClearEditText
+                android:id="@+id/et_phone_code1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="2"
+                android:hint="请输入验证码"
+                android:background="@null"
+                android:maxLines="1"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_validate1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/login_btn_bg"
+                android:gravity="center"
+                android:text="校验"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/login_btn_bg"
+            android:text="下一步"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:id="@+id/view" />
+
+</LinearLayout>

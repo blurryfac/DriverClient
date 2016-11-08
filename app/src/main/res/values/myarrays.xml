@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="data">
+        <item>豪华</item>
+        <item>普通</item>
+    </string-array>
+    <string-array name="num">
+        <item>3座</item>
+        <item>5座</item>
+        <item>7座</item>
+    </string-array>
+</resources>
