@@ -97,40 +97,6 @@ public class RecyclerRealTimeAdapter extends RecyclerView.Adapter<RecyclerRealTi
         });*/
     }
 
-    private void sendStateSever(String id, final ViewHolder holder, final int position) {
-        Log.e("-----phone----",id);
-        String url = Global.ip+"Taxic/ordersAction-upd_order.action?id="+id+"&state=5";
-        HttpUtils http = new HttpUtils();
-        http.configCurrentHttpCacheExpiry(1000);
-        http.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String s =responseInfo.result;
-                Log.i("-------------",s);
-                OrderJson oj= JSON.parseObject(s,OrderJson.class);
-                switch (oj.getMsg()){
-                    case "0":
-                        list.get(position).setState("已完成");
-                        holder.tv4.setBackgroundResource(R.drawable.login_button);
-                        holder.tv4.setText(list.get(position).getState());
-                        holder.tv4.setEnabled(false);
-                        break;
-                    case "102":
-                        Toast.makeText(mContext, "订单不存在！", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "103":
-                        Toast.makeText(mContext, "参数解析失败！", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-
-            }
-        });
-    }
-
     @Override
     public int getItemCount() {
         return list.size();

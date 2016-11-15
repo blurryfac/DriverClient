@@ -108,25 +108,24 @@
                         android:layout_height="wrap_content"
                          />
                 </LinearLayout>
-                <Button
+                <TextView
                     android:id="@+id/appoint_order_list"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/state_bg_full"
-                    android:text="约车订单"
-                    android:textColor="#ffffff" />
-                <Button
+                    android:gravity="center"
+                    android:drawableTop="@mipmap/now_order"
+                    android:background="#ffffff"
+                    android:text="预约订单"  />
+                <TextView
                     android:id="@+id/btn_show_menu"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/state_bg_full"
-                    android:text="即时订单"
-                    android:textColor="#ffffff" />
+                    android:gravity="center"
+                    android:drawableTop="@mipmap/empty_car"
+                    android:background="#ffffff"
+                    android:text="即时订单"  />
             </LinearLayout>
 
         </RelativeLayout>

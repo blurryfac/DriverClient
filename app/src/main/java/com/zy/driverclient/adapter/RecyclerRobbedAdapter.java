@@ -35,7 +35,6 @@ public class RecyclerRobbedAdapter extends RecyclerView.Adapter<RecyclerRobbedAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tv1.setText(list.get(position).getPhone());
         holder.tv2.setText(list.get(position).getAddress());
         holder.tv3.setText(list.get(position).getStartDate());
         holder.tv4.setText(list.get(position).getStartTime());
@@ -76,7 +75,6 @@ public class RecyclerRobbedAdapter extends RecyclerView.Adapter<RecyclerRobbedAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv1= (TextView) itemView.findViewById(R.id.robbed_call_phone);
             tv2= (TextView) itemView.findViewById(R.id.robbed_start_address_item);
             tv3= (TextView) itemView.findViewById(R.id.robbed_start_date);
             tv4= (TextView) itemView.findViewById(R.id.robbed_start_time);

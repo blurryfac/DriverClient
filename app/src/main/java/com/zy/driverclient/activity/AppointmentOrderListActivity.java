@@ -138,11 +138,13 @@ public class AppointmentOrderListActivity extends FatherActivity {
                         final AppointmentJson.Tailored tailored = aj.getTailored();
                         alert = null;
                         builder=new AlertDialog.Builder(AppointmentOrderListActivity.this);
-                        alert = builder.setTitle("接单成功").setMessage("到已抢订单中查看乘客信息？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        alert = builder.setTitle("接单成功").setMessage("到预约订单管理中查看乘客信息？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(AppointmentOrderListActivity.this, RobbedAppointmentOrderActivity.class);
+                                intent.putExtra("statePhone",phone);
                                 startActivity(intent);
+                                finish();
                             }
                         }).create();
                         alert.show();
@@ -226,6 +228,7 @@ public class AppointmentOrderListActivity extends FatherActivity {
                                         String orderTime = content.getOrder_time();
                                         orderTime = orderTime.substring(0, 10) + " " + orderTime.substring(10, orderTime.length());
                                         String address = content.getStart();
+                                        String end_add =content.getAddress();
                                         String phone =content.getPhone();
                                         int type = content.getType();
                                         String typeText=null;
@@ -240,7 +243,7 @@ public class AppointmentOrderListActivity extends FatherActivity {
                                                 break;
                                         }
                                         String seat = content.getSeat();
-                                        showMessage(orderTime, address, typeText, seat,phone,mid);
+                                        showMessage(orderTime, address, typeText, seat,end_add,mid);
                                         break;
                                 }
                             }
@@ -269,9 +272,9 @@ public class AppointmentOrderListActivity extends FatherActivity {
         });
     }
     private View dialog_view;
-    private TextView start_add_dia, start_time_dia, car_state, people_num;
+    private TextView start_add_dia, start_time_dia, car_state, people_num,end_dia_appoint;
     private Button ok,no;
-    private void showMessage(String orderTime, String address, String type, String seat, final String phone, final int id) {
+    private void showMessage(String orderTime, String address, String type, String seat,  String end_add, final int id) {
         alert = null;
         builder = new AlertDialog.Builder(this);
         final LayoutInflater inflater = AppointmentOrderListActivity.this.getLayoutInflater();
@@ -280,10 +283,12 @@ public class AppointmentOrderListActivity extends FatherActivity {
         start_time_dia = (TextView) dialog_view.findViewById(R.id.start_time_dia_appoint);
         car_state = (TextView) dialog_view.findViewById(R.id.car_state_appoint);
         people_num = (TextView) dialog_view.findViewById(R.id.people_num_appoint);
+        end_dia_appoint= (TextView) dialog_view.findViewById(R.id.end_dia_appoint);
         ok = (Button) dialog_view.findViewById(R.id.appoint_order);
         no = (Button) dialog_view.findViewById(R.id.cancel);
         start_add_dia.setText(address);
         start_time_dia.setText(orderTime);
+        end_dia_appoint.setText(end_add);
         car_state.setText(type + "");
         people_num.setText(seat);
         builder.setView(dialog_view);

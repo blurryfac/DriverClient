@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -13,13 +14,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@mipmap/car"
-            android:layout_margin="20dp" />
+            android:layout_margin="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/title_icon"
             android:text="@string/order_message"
             android:textSize="20sp" />
@@ -28,7 +29,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="20dp">
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/start_add_dia"
@@ -47,9 +48,29 @@
             android:textSize="20sp"
             />
     </RelativeLayout>
-
     <RelativeLayout
-        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/end_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="目的地："
+            android:maxLines="3"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/end_dia_appoint"
+            android:layout_toRightOf="@+id/end_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -70,7 +91,7 @@
             />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -91,7 +112,7 @@
             />
     </RelativeLayout>
     <RelativeLayout
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -120,7 +141,7 @@
             android:id="@+id/no"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="拨号"
             android:textColor="@color/color_ff"
             android:textSize="15sp"
@@ -142,6 +163,6 @@
             android:text="确定"
             android:textSize="15sp"
             android:background="@drawable/login_button_down"
-            android:layout_weight="1"/>
+            android:layout_weight="2"/>
     </LinearLayout>
 </LinearLayout>

@@ -69,7 +69,7 @@ public class RealTimeListActivity extends FatherActivity {
 
     private void init() {
         TextView toolbarTitle = (TextView) findViewById(R.id.title_tool);
-        toolbarTitle.setText("实时订单");
+        toolbarTitle.setText("即时订单");
         orderList = (LoadMoreRecylerView) findViewById(R.id.orderList_one);
         orderList.setLayoutManager(new LinearLayoutManager(this));
 //设置加载更多监听

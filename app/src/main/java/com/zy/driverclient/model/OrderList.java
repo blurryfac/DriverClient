@@ -58,6 +58,7 @@ public class OrderList {
         private String name; //称呼
         private String phone;
         private String start;  //出发点
+        private String address;
         private int type;  //订单状态  1-发布  2-取消  3-超时
         private String seat; // yyyy-MM-dd HH:mm:ss
         private int state;
@@ -81,6 +82,14 @@ public class OrderList {
                     ", order_time='" + order_time + '\'' +
                     ", timestamp='" + timestamp + '\'' +
                     '}';
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
 
         public int getId() {

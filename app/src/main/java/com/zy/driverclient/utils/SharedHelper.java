@@ -30,7 +30,16 @@ public class SharedHelper {
         editor.putString("password", password);
         editor.commit();
     }
-
+    /**
+     * 保存自动登录状态
+     * @param state 状态
+     */
+    public void saveLoginState(String state) {
+        SharedPreferences sp = mContext.getSharedPreferences("mypass", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("auto", state);
+        editor.commit();
+    }
     /**
      * 读取登陆信息
      * @return Map数据
@@ -40,9 +49,16 @@ public class SharedHelper {
         SharedPreferences sp = mContext.getSharedPreferences("mypass", Context.MODE_PRIVATE);
         data.put("user", sp.getString("user", ""));
         data.put("password", sp.getString("password", ""));
+        data.put("auto", sp.getString("auto", ""));
         return data;
     }
-
+    public Map<String, String> readLoginMessage() {
+        Map<String, String> data = new HashMap<String, String>();
+        SharedPreferences sp = mContext.getSharedPreferences("mypass", Context.MODE_PRIVATE);
+        data.put("user", sp.getString("user", ""));
+        data.put("password", sp.getString("password", ""));
+        return data;
+    }
     /**
      * 清除SharedPreference
      */
@@ -51,6 +67,7 @@ public class SharedHelper {
         SharedPreferences.Editor editor = sp.edit();
         editor.remove("user");
         editor.remove("password");
+        editor.remove("auto");
         editor.commit();
     }
 

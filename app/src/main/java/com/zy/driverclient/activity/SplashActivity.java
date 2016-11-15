@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.zy.driverclient.MainActivity;
 import com.zy.driverclient.R;
+import com.zy.driverclient.utils.SharedHelper;
 
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,6 +19,8 @@ import cn.jpush.android.api.InstrumentedActivity;
 
 
 public class SplashActivity extends InstrumentedActivity {
+    private SharedHelper sharedHelper;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,18 @@ public class SplashActivity extends InstrumentedActivity {
                 SharedPreferences sp = getSharedPreferences("login", Context.MODE_PRIVATE);
                 boolean isFirst = sp.getBoolean("isFirst", true);
                 //判断是否第一次进入，是进入引导页，不是进入主页;
-                intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                sharedHelper = new SharedHelper(SplashActivity.this);
+                Map<String, String> passData = sharedHelper.readMessage();
+                if (passData.get("auto") != null && passData.get("auto").equals("1")) {
+                    phone = passData.get("user");
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
 
             }
         };

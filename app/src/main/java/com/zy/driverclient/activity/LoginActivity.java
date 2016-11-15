@@ -51,7 +51,7 @@ public class LoginActivity extends InstrumentedActivity implements View.OnClickL
     private static final int MSG_SET_TAGS = 1002;
     private static final String TAG = "JPush";
     Handler handler = new Handler();
-
+private CheckBox auto_login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,12 @@ public class LoginActivity extends InstrumentedActivity implements View.OnClickL
         sharedHelper = new SharedHelper(this);
         init();
         Map<String, String> passData = sharedHelper.readMessage();
-        if (passData.get("user") != null && !passData.get("user").equals("")) {
+        if (passData.get("auto") != null && passData.get("auto").equals("1")) {
+            phoneNum.setText(passData.get("user"));
+            passwordNum.setText(passData.get("password"));
+            checkBox.setChecked(true);
+            auto_login.setChecked(true);
+        }else if(passData.get("user") != null && !passData.get("user").equals("")){
             phoneNum.setText(passData.get("user"));
             passwordNum.setText(passData.get("password"));
             checkBox.setChecked(true);
@@ -83,6 +88,7 @@ public class LoginActivity extends InstrumentedActivity implements View.OnClickL
         toolbarTitle.setText("登录");
         phoneNum = (EditText) findViewById(R.id.phone_num);
         passwordNum = (EditText) findViewById(R.id.pass_num);
+        auto_login= (CheckBox) findViewById(R.id.auto_login);
         login_btn = (Button) findViewById(R.id.login_btn);
         checkBox = (CheckBox) findViewById(R.id.check);
         newUser = (TextView) findViewById(R.id.newUser);
@@ -99,8 +105,21 @@ public class LoginActivity extends InstrumentedActivity implements View.OnClickL
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     sharedHelper.saveMessage(phoneNum.getText().toString(), passwordNum.getText().toString());
+
                 } else {
                     sharedHelper.clear();
+                    auto_login.setChecked(false);
+                }
+            }
+        });
+        auto_login.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    sharedHelper.saveLoginState("1");
+                    checkBox.setChecked(true);
+                } else {
+                    sharedHelper.saveLoginState("0");
                 }
             }
         });

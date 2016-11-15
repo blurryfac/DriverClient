@@ -1,9 +1,12 @@
 package com.zy.driverclient;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,9 +70,11 @@ import com.zy.driverclient.model.UpdateLocation;
 import com.zy.driverclient.model.VersionMessage;
 import com.zy.driverclient.service.UpdateService;
 import com.zy.driverclient.utils.ExampleUtil;
+import com.zy.driverclient.utils.SharedHelper;
 
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -95,7 +100,7 @@ public class MainActivity extends FatherActivity
     boolean isFirstLoc = true; // 是否首次定位
     AlertDialog alert = null;
     AlertDialog.Builder builder = null;
-    private Button btn_show_menu;
+    private TextView btn_show_menu;
     private TextView login_phone;
     private String state = null;//司机状态
     Toolbar toolbar;
@@ -121,12 +126,13 @@ public class MainActivity extends FatherActivity
             }
         }
     };
+    private Drawable drawable;
+    private SharedHelper sharedHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());//初始化百度地图
-
         setContentView(R.layout.activity_main);
         serverVersionNum();
         //设置状态栏透明
@@ -135,7 +141,13 @@ public class MainActivity extends FatherActivity
         init();
         map();
         Intent intent = getIntent();
-        if (intent.getStringExtra("statePhone") != null) {
+        sharedHelper = new SharedHelper(this);
+        Map<String, String> passData = sharedHelper.readLoginMessage();
+        if (passData.get("user") != null && !passData.get("user").equals("")) {
+            phone = passData.get("user");
+            login_phone.setText(phone.substring(0, 3) + "****" + phone.substring(7, phone.length()));
+            setTag(phone);
+        } else if (intent.getStringExtra("statePhone") != null) {
             phone = intent.getStringExtra("statePhone");
             login_phone.setText(phone.substring(0, 3) + "****" + phone.substring(7, phone.length()));
             setTag(phone);
@@ -163,8 +175,25 @@ public class MainActivity extends FatherActivity
 
     }
 
+    /**
+     * 设置状态按钮背景资源
+     *
+     * @param resID 图片ID
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setBackground(int resID) {
+        drawable = this.getResources().getDrawable(resID);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        btn_show_menu.setCompoundDrawables(null, drawable, null, null);
+    }
+
     private volatile boolean isStopped = false;
 
+    /**
+     * 设置推送tag
+     *
+     * @param tag
+     */
     private void setTag(String tag) {
         // 检查 tag 的有效性
         if (TextUtils.isEmpty(tag)) {
@@ -264,20 +293,23 @@ public class MainActivity extends FatherActivity
     private TextView locationText;
     //private Button start_order;
     private ImageView imageView;
+    private TextView appoint_order_list;
 
+    /**
+     * 初始化
+     */
     private void init() {
-
+        appoint_order_list = (TextView) findViewById(R.id.appoint_order_list);
         TextView toolbarTitle = (TextView) findViewById(R.id.title_tool);
         toolbarTitle.setText("汴梁司机");
         login_phone = (TextView) findViewById(R.id.login_phone);
-        btn_show_menu = (Button) findViewById(R.id.btn_show_menu);
+        btn_show_menu = (TextView) findViewById(R.id.btn_show_menu);
         btn_show_menu.setOnClickListener(this);
-        // start_order = (Button) findViewById(R.id.start_order);
         imageView = (ImageView) findViewById(R.id.imageView);
         locationText = (TextView) findViewById(R.id.location);
         mMapView = (MapView) findViewById(R.id.map_view);
         imageView.setOnClickListener(this);
-        // start_order.setOnClickListener(this);
+        appoint_order_list.setOnClickListener(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -460,8 +492,7 @@ public class MainActivity extends FatherActivity
                         } else if (content.getState() == 5) {
                             state = "1";
                             updateState();
-                            btn_show_menu.setText("状态：空车");
-                            btn_show_menu.setBackgroundResource(R.drawable.state_bg_empty);
+                            setBackground(R.mipmap.appiont_order);
                             Intent start_result = new Intent(MainActivity.this, DriverOrderActivity.class);
                             start_result.putExtra("statePhone", phone);
                             startActivityForResult(start_result, 10);
@@ -471,7 +502,7 @@ public class MainActivity extends FatherActivity
                     case "101":
                         state = "1";
                         updateState();
-                        btn_show_menu.setText("状态：空车");
+                        setBackground(R.mipmap.appiont_order);
                         // start_order.setVisibility(View.VISIBLE);
                         break;
                 }
@@ -497,28 +528,29 @@ public class MainActivity extends FatherActivity
                     case 0:
                         state = "1";
                         updateState();
-                        btn_show_menu.setText("状态：空车");
-                        btn_show_menu.setBackgroundResource(R.drawable.state_bg_empty);
+                        setBackground(R.mipmap.appiont_order);
                         Intent start_result = new Intent(MainActivity.this, DriverOrderActivity.class);
                         start_result.putExtra("statePhone", phone);
                         startActivityForResult(start_result, 10);
-                        Log.e("taxi5-------",taxiState+"");
+                        Log.e("taxi5-------", taxiState + "");
                         taxiState = 1;
                         break;
                     case 1:
-                        btn_show_menu.setText("状态：有客");
-                        btn_show_menu.setBackgroundResource(R.drawable.state_bg_full);
+                        setBackground(R.mipmap.empty_car);
                         state = "2";
                         updateState();
                         taxiState = 0;
-                        Log.e("taxi4-------",taxiState+"");
+                        Log.e("taxi4-------", taxiState + "");
                         break;
                     default:
                         break;
 
                 }
                 break;
-            case R.id.imageView:
+            case R.id.appoint_order_list:
+                Intent intent = new Intent(this, AppointmentOrderListActivity.class);
+                intent.putExtra("statePhone", phone);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -526,6 +558,13 @@ public class MainActivity extends FatherActivity
         }
     }
 
+    /**
+     * 带返回值的intent
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -533,9 +572,9 @@ public class MainActivity extends FatherActivity
             passenger_phone = data.getStringExtra("passengerPhone");
             Log.e("---phone", passenger_phone);
             state = "2";
-            btn_show_menu.setText("状态：有客");
-            taxiState=0;
-            Log.e("taxi3-------",taxiState+"");
+            setBackground(R.mipmap.appiont_order);
+            taxiState = 0;
+            Log.e("taxi3-------", taxiState + "");
             updateState();
         }
     }
@@ -693,10 +732,12 @@ public class MainActivity extends FatherActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_manage) {
-            Intent intent = new Intent(this, AppointmentOrderListActivity.class);
-            intent.putExtra("statePhone", phone);
+        if (id == R.id.sign_off) {
+
+            Intent intent = new Intent(this, LoginActivity.class);
+
             startActivity(intent);
+            finish();
         } else if (id == R.id.robbed_manage) {
             Intent intent = new Intent(this, RobbedAppointmentOrderActivity.class);
             intent.putExtra("statePhone", phone);
@@ -744,6 +785,9 @@ public class MainActivity extends FatherActivity
         // queryState();
     }
 
+    /**
+     * 查询司机状态
+     */
     private void queryState() {
         String url = Global.ip + "Taxic/driverAction-chedstu.action?phone=" + phone;
         http.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
@@ -756,17 +800,13 @@ public class MainActivity extends FatherActivity
                     case "0":
                         if (qs.getDriver().equals("2")) {
 
-                            btn_show_menu.setText("状态：有客");
-                            //  start_order.setVisibility(View.INVISIBLE);
-                            btn_show_menu.setBackgroundResource(R.drawable.state_bg_full);
+                            setBackground(R.mipmap.empty_car);
                             taxiState = 0;
-                            Log.e("taxi1-------",taxiState+"");
+                            Log.e("taxi1-------", taxiState + "");
                         } else if (qs.getDriver().equals("1")) {
-                            btn_show_menu.setText("状态：空车");
-                            // start_order.setVisibility(View.VISIBLE);
-                            btn_show_menu.setBackgroundResource(R.drawable.state_bg_empty);
+                            setBackground(R.mipmap.appiont_order);
                             taxiState = 1;
-                            Log.e("taxi2-------",taxiState+"");
+                            Log.e("taxi2-------", taxiState + "");
                         }
 
                         break;
@@ -828,6 +868,9 @@ public class MainActivity extends FatherActivity
         }
     }
 
+    /**
+     * 查询服务器版本号
+     */
     public void serverVersionNum() {
 
         HttpUtils http = new HttpUtils();

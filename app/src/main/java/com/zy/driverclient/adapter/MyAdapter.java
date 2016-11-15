@@ -56,7 +56,7 @@ public class MyAdapter extends BaseAdapter {
         }
         viewHolder.name.setText(list.get(position).getPlace());
         viewHolder.positive.setText("查看");
-        viewHolder.positive.setOnClickListener(mListener);
+       // viewHolder.positive.setOnClickListener(mListener);
         viewHolder.positive.setTag(position);
         return convertView;
     }

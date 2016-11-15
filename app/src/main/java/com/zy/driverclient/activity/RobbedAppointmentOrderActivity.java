@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +25,10 @@ import com.zy.driverclient.adapter.RecyclerRobbedAdapter;
 import com.zy.driverclient.config.Global;
 import com.zy.driverclient.model.OrderList;
 import com.zy.driverclient.model.ShowOrderList;
-import com.zy.driverclient.utils.DividerItemDecoration;
 import com.zy.driverclient.utils.SharedHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by blurryFace on 2016/8/24.
@@ -134,6 +131,7 @@ public class RobbedAppointmentOrderActivity extends FatherActivity {
                                 orderTime = orderTime.substring(0, 10) + " " + orderTime.substring(10, orderTime.length());
                                 String address = content.getStart();
                                 String phone =content.getPhone();
+                                String end_add =content.getAddress();
                                 int type = content.getType();
                                 String typeText=null;
                                 switch (type) {
@@ -148,7 +146,7 @@ public class RobbedAppointmentOrderActivity extends FatherActivity {
                                         break;
                                 }
                                 String seat = content.getSeat();
-                                showMessage(orderTime, address, typeText, seat,phone);
+                                showMessage(orderTime, address, typeText, seat,phone,end_add);
 
                             }
 
@@ -176,10 +174,10 @@ public class RobbedAppointmentOrderActivity extends FatherActivity {
     }
 
     private View dialog_view;
-    private TextView start_add_dia, start_time_dia, car_state, people_num;
+    private TextView start_add_dia, start_time_dia, car_state, people_num,end_dia_appoint;
     private Button ok,no;
 
-    private void showMessage(String orderTime, String address, String type, String seat, final String phone) {
+    private void showMessage(String orderTime, String address, String type, String seat, final String phone,String end_add) {
         alert = null;
         builder = new AlertDialog.Builder(this);
         final LayoutInflater inflater = RobbedAppointmentOrderActivity.this.getLayoutInflater();
@@ -188,9 +186,11 @@ public class RobbedAppointmentOrderActivity extends FatherActivity {
         start_time_dia = (TextView) dialog_view.findViewById(R.id.start_time_dia_text);
         car_state = (TextView) dialog_view.findViewById(R.id.car_state_text);
         people_num = (TextView) dialog_view.findViewById(R.id.people_num_text);
+        end_dia_appoint= (TextView) dialog_view.findViewById(R.id.end_dia_appoint);
         ok = (Button) dialog_view.findViewById(R.id.ok);
         no = (Button) dialog_view.findViewById(R.id.no);
         start_add_dia.setText(address);
+        end_dia_appoint.setText(end_add);
         start_time_dia.setText(orderTime);
         car_state.setText(type + "");
         people_num.setText(seat);

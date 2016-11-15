@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -113,8 +114,8 @@ public class DriverOrderActivity extends FatherActivity {
             Log.e("=========distace", (int) distance + "");
             adapter.notifyDataSetChanged();
             if (list != null) {
-                //start();
-                startCountBack();
+                start();
+                //startCountBack();
             }
         }
     }
@@ -127,10 +128,7 @@ public class DriverOrderActivity extends FatherActivity {
     private MyAdapter.MyClickListener mListener = new MyAdapter.MyClickListener() {
         @Override
         public void myOnClick(int position, View v) {
-            mPisition = position;
-            showOrderMessageDialog();
 
-            Log.i("--------position", mPisition + "");
 
         }
     };
@@ -150,7 +148,6 @@ public class DriverOrderActivity extends FatherActivity {
 
     }
 
-    private int taxiState = 0;
 
     private void init() {
         TextView toolbarTitle = (TextView) findViewById(R.id.title_tool);
@@ -164,26 +161,15 @@ public class DriverOrderActivity extends FatherActivity {
         takeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (taxiState) {
-                    case 0:
-                        state = "2";
-                        updateState();
-                        takeOrder.setText("状态：有客");
-                        takeOrder.setBackgroundResource(R.drawable.state_bg_full);
-                        taxiState = 1;
-                        break;
-                    case 1:
-                        takeOrder.setText("状态：空车");
-                        takeOrder.setBackgroundResource(R.drawable.state_bg_empty);
-
-                        state = "1";
-                        updateState();
-                        taxiState = 0;
-                        break;
-                    default:
-                        break;
-
-                }
+               finish();
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mPisition = position;
+                showOrderMessageDialog();
+                Log.i("--------position", mPisition + "");
             }
         });
 
@@ -238,8 +224,8 @@ public class DriverOrderActivity extends FatherActivity {
                     adapter.notifyDataSetChanged();
                     if (list != null) {
                         Log.i("-----------", "0000000000000");
-                        startCountBack();
-                        //start();
+                        //startCountBack();
+                        start();
                     }
                 }
             }
@@ -291,9 +277,9 @@ public class DriverOrderActivity extends FatherActivity {
                         showOrderFail();
                         list.remove(mPisition);
                         adapter.notifyDataSetChanged();
-                        if (list == null || list.isEmpty()) {
-                            timer.cancel();
-                        }
+//                        if (list == null || list.isEmpty()) {
+//                            timer.cancel();
+//                        }
                         break;
                     case "102":
                         alert.dismiss();
@@ -380,10 +366,8 @@ public class DriverOrderActivity extends FatherActivity {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                takeOrder.setText("有客");
                 state = "2";
                 updateState();
-                takeOrder.setBackgroundResource(R.drawable.state_bg_full);
                 Uri uri = Uri.parse("tel:" + passenger_phone);
                 Intent intent = new Intent(Intent.ACTION_CALL, uri);
                 startActivity(intent);
