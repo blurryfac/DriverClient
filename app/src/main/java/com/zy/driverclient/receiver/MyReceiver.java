@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.zy.driverclient.MainActivity;
 import com.zy.driverclient.activity.DriverOrderActivity;
-import com.zy.driverclient.model.DriverOrder;
 import com.zy.driverclient.utils.ExampleUtil;
 
 import org.json.JSONException;

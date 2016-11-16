@@ -470,7 +470,7 @@ public class MainActivity extends FatherActivity
 
     /**
      * 车辆状态
-     */
+     *//*
     private void carState() {
         String url = Global.ip + "Taxic/ordersAction-orderByConR.action?receive_phone=" + phone;
         HttpUtils http = new HttpUtils();
@@ -514,7 +514,7 @@ public class MainActivity extends FatherActivity
                 Toast.makeText(MainActivity.this, "网路连接失败，请检查网络后重试！", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     private int taxiState = 0;
 

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
-        android:background="@drawable/card_background"
+        android:background="@drawable/list_background"
         android:padding="10dp">
 
         <LinearLayout

@@ -1,25 +1,13 @@
 package com.zy.driverclient.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.zy.driverclient.R;
-import com.zy.driverclient.config.Global;
-import com.zy.driverclient.model.OrderJson;
 import com.zy.driverclient.model.ShowOrderList;
 
 import java.util.List;
@@ -51,11 +39,6 @@ public class RecyclerRealTimeAdapter extends RecyclerView.Adapter<RecyclerRealTi
         holder.tv1.setText(list.get(position).getAddress());
         holder.tv3.setText(list.get(position).getStartTime());
         holder.tv2.setText(list.get(position).getStartDate());
-        //holder.tv4.setText(list.get(position).getState());
-//        if( holder.tv4.getText().equals("已完成")){
-//            holder.tv4.setEnabled(false);
-//            holder.tv4.setBackgroundResource(R.drawable.login_button);
-//        }
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -73,28 +56,7 @@ public class RecyclerRealTimeAdapter extends RecyclerView.Adapter<RecyclerRealTi
                 }
             });
         }
-       /* holder.tv4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("-------------click", "click---");
-                AlertDialog alert = null;
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                alert = builder.setIcon(R.mipmap.car).setTitle("提示").setMessage("确定完成此次订单？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
 
-                        //sendStateSever(list.get(position).getId() + "", holder, position);
-
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).create();
-                alert.show();
-            }
-        });*/
     }
 
     @Override
@@ -120,7 +82,6 @@ public class RecyclerRealTimeAdapter extends RecyclerView.Adapter<RecyclerRealTi
             tv1 = (TextView) itemView.findViewById(R.id.start_address_item);
             tv3 = (TextView) itemView.findViewById(R.id.start_time);
             tv2 = (TextView) itemView.findViewById(R.id.start_date);
-            //tv4 = (TextView) itemView.findViewById(R.id.state);
 
         }
     }

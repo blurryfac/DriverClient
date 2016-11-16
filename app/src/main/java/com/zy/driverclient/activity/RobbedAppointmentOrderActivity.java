@@ -25,7 +25,6 @@ import com.zy.driverclient.adapter.RecyclerRobbedAdapter;
 import com.zy.driverclient.config.Global;
 import com.zy.driverclient.model.OrderList;
 import com.zy.driverclient.model.ShowOrderList;
-import com.zy.driverclient.utils.SharedHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,6 @@ import java.util.List;
  * Created by blurryFace on 2016/8/24.
  */
 public class RobbedAppointmentOrderActivity extends FatherActivity {
-    private SharedHelper sharedHelper;
     private String phone;
     private LoadMoreRecylerView orderList;
     private List<ShowOrderList> list;

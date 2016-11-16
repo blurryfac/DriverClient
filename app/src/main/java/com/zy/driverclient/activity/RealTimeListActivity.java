@@ -5,14 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +23,9 @@ import com.zy.driverclient.adapter.RecyclerRealTimeAdapter;
 import com.zy.driverclient.config.Global;
 import com.zy.driverclient.model.NowList;
 import com.zy.driverclient.model.ShowOrderList;
-import com.zy.driverclient.utils.DividerItemDecoration;
-import com.zy.driverclient.utils.SharedHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by blurryFace on 2016/8/28.

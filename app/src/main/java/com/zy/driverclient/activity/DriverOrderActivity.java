@@ -9,10 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -25,14 +23,12 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
-import com.zy.driverclient.ExampleApplication;
 import com.zy.driverclient.MainActivity;
 import com.zy.driverclient.R;
 import com.zy.driverclient.adapter.MyAdapter;
@@ -56,7 +52,6 @@ import java.util.concurrent.TimeUnit;
  * Created by blurryFace on 2016/9/20.
  */
 public class DriverOrderActivity extends FatherActivity {
-    // public static List<Map<String, String>> list;
     private List<DriverOrderList> list;
     private ListView listView;
     private Handler handler = new Handler() {
@@ -73,7 +68,6 @@ public class DriverOrderActivity extends FatherActivity {
     };
     private SharedHelper sharedHelper;
     private String phone;
-    GeoCoder mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,23 +89,18 @@ public class DriverOrderActivity extends FatherActivity {
         if (intent.getStringExtra("extras") != null) {
 
             String extras = intent.getStringExtra("extras");
-            //Map<String, String> map = new HashMap<>();
-            // map.put("name", extras);
-            // map.put("order", "抢单");
             DriverOrderList dol = new DriverOrderList();
             dol.setName(extras);
             String[] arr = extras.split(",");
             String a = arr[2].substring(2, arr[2].length() - 1);
             String b = arr[3].substring(2, arr[3].length() - 1);
             String address = arr[4].substring(4, arr[4].length() - 3);
-            distance = twoPlaceDistace(a, b);
+            distance = twoPlaceDistance(a, b);
             dol.setAddress(address);
             dol.setPlace("距您" + (int) distance + "米乘客呼叫");
             dol.setOrder("查看");
             //list.add(map);
             list.add(0, dol);
-            Log.i("=======", MainActivity.pLatitude + "_" + MainActivity.pLongitude);
-            Log.e("=========distace", (int) distance + "");
             adapter.notifyDataSetChanged();
             if (list != null) {
                 start();
@@ -121,7 +110,7 @@ public class DriverOrderActivity extends FatherActivity {
     }
 
     private Button takeOrder;
-    private int mPisition;
+    private int mPosition;
     /**
      * 实现类，响应按钮点击事件
      */
@@ -133,7 +122,7 @@ public class DriverOrderActivity extends FatherActivity {
         }
     };
 
-    private double twoPlaceDistace(String a, String b) {
+    private double twoPlaceDistance(String a, String b) {
         double pla2 = Double.parseDouble(a);
         double plo2 = Double.parseDouble(b);
         double pla1 = Double.parseDouble(MainActivity.pLatitude);
@@ -142,7 +131,6 @@ public class DriverOrderActivity extends FatherActivity {
         LatLng l1 = new LatLng(pla1, plo1);
         LatLng l2 = new LatLng(plo2, pla2);
         double distance = DistanceUtil.getDistance(l1, l2);
-        Log.i("-----------dis", distance + "");
 
         return distance;
 
@@ -167,9 +155,8 @@ public class DriverOrderActivity extends FatherActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mPisition = position;
+                mPosition = position;
                 showOrderMessageDialog();
-                Log.i("--------position", mPisition + "");
             }
         });
 
@@ -204,17 +191,12 @@ public class DriverOrderActivity extends FatherActivity {
             if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
                 String extras = intent.getStringExtra(KEY_EXTRAS);
                 if (!ExampleUtil.isEmpty(extras)) {
-//                    Map<String, String> map = new HashMap<>();
-//                    map.put("name", extras);
-//                    map.put("order", "抢单");
-//                    list.add(map);
-                    Log.i("----------", extras);
                     DriverOrderList dol = new DriverOrderList();
                     dol.setName(extras);
                     String[] arr = extras.split(",");
                     String a = arr[2].substring(2, arr[2].length() - 1);
                     String b = arr[3].substring(2, arr[3].length() - 1);
-                    distance = twoPlaceDistace(a, b);
+                    distance = twoPlaceDistance(a, b);
                     String address = arr[4].substring(4, arr[4].length() - 3);
                     dol.setAddress(address);
                     dol.setPlace("距您" + (int) distance + "米乘客呼叫");
@@ -223,7 +205,6 @@ public class DriverOrderActivity extends FatherActivity {
                     list.add(0, dol);
                     adapter.notifyDataSetChanged();
                     if (list != null) {
-                        Log.i("-----------", "0000000000000");
                         //startCountBack();
                         start();
                     }
@@ -268,14 +249,9 @@ public class DriverOrderActivity extends FatherActivity {
                         adapter.notifyDataSetChanged();
                         break;
                     case "101":
-//                        imgState=false;
-//                        alert = null;
-//                        builder = new AlertDialog.Builder(DriverOrderActivity.this);
-//                        alert = builder.setMessage("订单已被抢").create();
-//                        show(2000);
                         alert.dismiss();
                         showOrderFail();
-                        list.remove(mPisition);
+                        list.remove(mPosition);
                         adapter.notifyDataSetChanged();
 //                        if (list == null || list.isEmpty()) {
 //                            timer.cancel();
@@ -322,9 +298,9 @@ public class DriverOrderActivity extends FatherActivity {
         passenger_distance = (TextView) view_custom.findViewById(R.id.passenger_distance_text);
         passenger_location = (TextView) view_custom.findViewById(R.id.passenger_location_text);
         passenger_distance.setText((int) distance + "米");
-        Log.e("-----------mPis", mPisition + "");
+        Log.e("-----------mPis", mPosition + "");
         Log.e("-----------mP", list.size() + "---list");
-        passenger_location.setText(list.get(mPisition).getAddress());
+        passenger_location.setText(list.get(mPosition).getAddress());
         builder.setView(view_custom);
         builder.setCancelable(false);
         alert = builder.create();
@@ -332,7 +308,7 @@ public class DriverOrderActivity extends FatherActivity {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                String msg = list.get(mPisition).getName();
+                String msg = list.get(mPosition).getName();
                 String[] arr = msg.split(",");
                 String id = arr[0].substring(15, arr[0].length());
                 showOrder(id);
@@ -522,7 +498,6 @@ public class DriverOrderActivity extends FatherActivity {
                 for (int i = 20; i >= 0; i--) {
                     try {
                         Thread.sleep(1000);
-                        Log.e("--------------0", i + "---" + j);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
