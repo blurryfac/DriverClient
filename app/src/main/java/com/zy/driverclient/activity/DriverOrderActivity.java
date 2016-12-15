@@ -286,7 +286,6 @@ public class DriverOrderActivity extends FatherActivity {
     private TextView passenger_location;
     private boolean imgState;
 
-
     private void showOrderMessageDialog() {
         alert = null;
         builder = new AlertDialog.Builder(DriverOrderActivity.this);
@@ -397,13 +396,11 @@ public class DriverOrderActivity extends FatherActivity {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String s = responseInfo.result;
-                Log.i("--------------", s);
                 QueryState qs = JSON.parseObject(s, QueryState.class);
                 switch (qs.getMsg()) {
                     case "0":
                         Intent intent = new Intent(DriverOrderActivity.this, MainActivity.class);
                         intent.putExtra("passengerPhone", passenger_phone);
-                        Log.i("--------1--", passenger_phone);
                         setResult(11, intent);
                         finish();
                         break;
@@ -423,7 +420,6 @@ public class DriverOrderActivity extends FatherActivity {
         });
     }
 
-
     /**
      * 更新状态
      */
@@ -434,7 +430,6 @@ public class DriverOrderActivity extends FatherActivity {
         http.send(HttpRequest.HttpMethod.GET, Global.ip + "Taxic/driverAction-updSta.action?phone=" + phone + "&state=" + state, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.i("---------1-", responseInfo.result);
                 Log.i("----------", "司机状态更新成功");
             }
 
@@ -475,7 +470,7 @@ public class DriverOrderActivity extends FatherActivity {
 
         timer = new Timer();
         timerTask = new TimerTask() {
-            int count = 10;
+            int count = 20;
 
             @Override
             public void run() {

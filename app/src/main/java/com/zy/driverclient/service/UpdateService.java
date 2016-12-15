@@ -145,7 +145,7 @@ public class UpdateService extends Service {
                 // 下载函数
                 // 增加权限
                 long downloadSize = downloadUpdateFile(
-                        "http://122.0.114.195:8088/Taxic/passengerAction-Download.action", updateFile);
+                        Global.ip+"Taxic/passengerAction-Download.action", updateFile);
                 if (downloadSize > 0) {
                     // 下载成功,发送消息
                     updateHandler.sendMessage(message);

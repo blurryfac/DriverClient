@@ -144,6 +144,9 @@ public class RobbedAppointmentOrderActivity extends FatherActivity {
                                         break;
                                 }
                                 String seat = content.getSeat();
+                                if(seat.equals("8")){
+                                    seat="7座以上";
+                                }
                                 showMessage(orderTime, address, typeText, seat,phone,end_add);
 
                             }

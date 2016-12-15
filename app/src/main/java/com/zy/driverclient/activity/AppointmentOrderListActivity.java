@@ -242,6 +242,9 @@ public class AppointmentOrderListActivity extends FatherActivity {
                                                 break;
                                         }
                                         String seat = content.getSeat();
+                                        if(seat.equals("8")){
+                                            seat="7座以上";
+                                        }
                                         showMessage(orderTime, address, typeText, seat,end_add,mid);
                                         break;
                                 }
